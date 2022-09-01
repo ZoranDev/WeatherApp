@@ -1,8 +1,10 @@
+import { WeatherProvider } from "./context/WeatherContext";
+
 function App() {
   return (
-    <div>
-      <h1>Start</h1>
-    </div>
+    <WeatherProvider>
+      <div className="w-full min-h-screen bg-[url('./assets/background.jpg')] bg-cover"></div>
+    </WeatherProvider>
   );
 }
 
