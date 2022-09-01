@@ -1,10 +1,13 @@
 import { useState, useContext } from "react";
 import WeatherContext from "../context/WeatherContext";
 import { FaSearch } from "react-icons/fa";
+//Components
+import WeatherDetails from "./WeatherDetails";
 
 const Form = () => {
   // Context
-  const { fetchTodayForecast } = useContext(WeatherContext);
+  const { fetchTodayForecast, searchedCityWeatherInfo } =
+    useContext(WeatherContext);
 
   // State for search city
   const [searchCity, setSearchCity] = useState("");
@@ -26,8 +29,12 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="h-full w-[300px] bg-[rgba(0,0,0,0.7)]">
-      <div className="w-full flex items-center justify-between p-2 ">
+    <form
+      onSubmit={onSubmit}
+      className="h-full w-[300px] bg-[rgba(0,0,0,0.7)] p-2"
+    >
+      {/* Input section */}
+      <div className="w-full flex items-center justify-between mb-4">
         <input
           type="text"
           value={searchCity}
@@ -41,6 +48,9 @@ const Form = () => {
           <FaSearch className="w-full h-full" />
         </button>
       </div>
+
+      {/* Weather details and next days */}
+      {searchedCityWeatherInfo && <WeatherDetails />}
     </form>
   );
 };
