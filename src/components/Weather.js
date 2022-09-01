@@ -5,6 +5,9 @@ import CurrentInfo from "./CurrentInfo";
 import Form from "./Form";
 
 const Weather = () => {
+  // Context
+  const { searchedCityWeatherInfo } = useContext(WeatherContext);
+
   return (
     // Odje vidjeti za ovu sirinu i visinu
     <div className="w-4/5 h-[600px] bg-[url('./assets/background.jpg')] bg-cover flex items-center justify-between shadow-[0_0_200px_rgba(0,0,0)] rounded">
@@ -12,7 +15,7 @@ const Weather = () => {
       <div className="h-full flex flex-col justify-between p-5">
         {/* Logo */}
         <div className="text-2xl text-neutral-200">Weather APP</div>
-        <CurrentInfo />
+        {searchedCityWeatherInfo && <CurrentInfo />}
       </div>
       {/* Right side */}
       <Form />
