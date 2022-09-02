@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import WeatherContext from "../context/WeatherContext";
+import PreviousCity from "./PreviousCity";
 
 const PreviousSearches = () => {
   // Context
@@ -9,12 +10,7 @@ const PreviousSearches = () => {
     <div className="text-neutral-400  mb-4">
       {previousSearches.length !== 0 &&
         previousSearches.map((city, index) => (
-          <div
-            key={index}
-            className="capitalize mb-1 cursor-pointer hover:text-white"
-          >
-            {city}
-          </div>
+          <PreviousCity key={index} city={city.city} />
         ))}
     </div>
   );

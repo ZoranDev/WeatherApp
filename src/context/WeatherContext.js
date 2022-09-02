@@ -36,8 +36,16 @@ export const WeatherProvider = ({ children }) => {
             currentWeather: currentData,
             forecastWeather: forecastData,
           });
+
           // Set previous
-          setPreviousSearches([...previousSearches, searchCity.toLowerCase()]);
+          setPreviousSearches([
+            ...previousSearches,
+            {
+              city: searchCity.toLowerCase(),
+              cityCurrentWeather: currentData,
+              cityForecastWeather: forecastData,
+            },
+          ]);
         } else {
           alert("City not found");
         }
@@ -47,12 +55,41 @@ export const WeatherProvider = ({ children }) => {
     }
   };
 
+  //searchAgain
+  const searchAgain = (city) => {
+    previousSearches.forEach(
+      (previousCity) =>
+        previousCity.city === city &&
+        setSearchedCityWeatherInfo({
+          currentWeather: previousCity.cityCurrentWeather,
+          forecastWeather: previousCity.cityForecastWeather,
+        })
+    );
+  };
+
+  //removeThisCity
+  const removeThisCity = (city) => {
+    if (previousSearches.length === 1) {
+      setPreviousSearches([]);
+      setSearchedCityWeatherInfo({
+        currentWeather: null,
+        forecastWeather: null,
+      });
+    } else {
+      setPreviousSearches(
+        previousSearches.filter((previousCity) => city !== previousCity.city)
+      );
+    }
+  };
+
   return (
     <WeatherContext.Provider
       value={{
         searchedCityWeatherInfo,
         previousSearches,
         fetchTodayForecast,
+        searchAgain,
+        removeThisCity,
       }}
     >
       {children}

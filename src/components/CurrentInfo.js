@@ -17,7 +17,7 @@ const CurrentInfo = () => {
       </div>
       {/* City name and date */}
       <div className="h-full text-neutral-100 flex flex-col items-center justify-center mr-2">
-        <h1 className="text-4xl">{currentWeather.name}</h1>
+        <h1 className="text-4xl h-[50px]">{currentWeather.name}</h1>
         <p className="text-xl">{today}</p>
       </div>
       <div className="h-full flex items-center justify-center flex-col">
