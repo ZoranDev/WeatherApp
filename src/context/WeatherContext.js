@@ -12,12 +12,17 @@ export const WeatherProvider = ({ children }) => {
   // Previos searches state
   const [previousSearches, setPreviousSearches] = useState([]);
 
+  // State for loading
+  const [loading, setLoading] = useState(false);
+
   //fetchTodayForecast function
   const fetchTodayForecast = async (searchCity) => {
     if (previousSearches.includes(searchCity.toLowerCase())) {
       alert("Vec trazen!");
     } else {
       try {
+        setLoading(true);
+
         const currentResponse = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=de7464f284cc4ed086a1d281fcc56045&units=metric`
         );
@@ -49,6 +54,7 @@ export const WeatherProvider = ({ children }) => {
         } else {
           alert("City not found");
         }
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }

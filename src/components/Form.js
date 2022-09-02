@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import WeatherContext from "../context/WeatherContext";
 import { FaSearch } from "react-icons/fa";
+import Loader from "../assets/loader.jpg";
 //Components
 import WeatherDetails from "./WeatherDetails";
 import WeatherForecast from "./WeatherForecast";
@@ -12,6 +13,7 @@ const Form = () => {
     fetchTodayForecast,
     searchedCityWeatherInfo: { currentWeather, forecastWeather },
     previousSearches,
+    loading,
   } = useContext(WeatherContext);
 
   // State for search city
@@ -56,6 +58,13 @@ const Form = () => {
           <FaSearch className="w-full h-full" />
         </button>
       </div>
+
+      {/* Loader section */}
+      {loading && (
+        <div className="w-full flex items-center justify-center">
+          <img src={Loader} className="w-[50px] h-[50px]" />
+        </div>
+      )}
 
       {/* Weather details and next days */}
       <div className=" scroll-div">
