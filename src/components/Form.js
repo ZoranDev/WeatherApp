@@ -4,12 +4,14 @@ import { FaSearch } from "react-icons/fa";
 //Components
 import WeatherDetails from "./WeatherDetails";
 import WeatherForecast from "./WeatherForecast";
+import PreviousSearches from "./PreviousSearches";
 
 const Form = () => {
   // Context
   const {
     fetchTodayForecast,
     searchedCityWeatherInfo: { currentWeather, forecastWeather },
+    previousSearches,
   } = useContext(WeatherContext);
 
   // State for search city
@@ -43,6 +45,9 @@ const Form = () => {
           value={searchCity}
           onChange={onChange}
           className="h-10 w-[230px] bg-transparent p-2 border-b-2 border-white focus:outline-none text-white text-xl capitalize"
+          placeholder={
+            previousSearches.length !== 0 ? "Another city" : "Search city"
+          }
         />
         <button
           type="submit"
@@ -54,6 +59,7 @@ const Form = () => {
 
       {/* Weather details and next days */}
       <div className=" scroll-div">
+        <PreviousSearches />
         {currentWeather && <WeatherDetails />}
         {forecastWeather && <WeatherForecast />}
       </div>

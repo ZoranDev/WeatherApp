@@ -6,7 +6,6 @@ const WeatherForecast = () => {
   const {
     searchedCityWeatherInfo: { forecastWeather },
   } = useContext(WeatherContext);
-  console.log(forecastWeather);
 
   return (
     <div className="w-full mb-4">
