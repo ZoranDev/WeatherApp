@@ -12,9 +12,10 @@ const Weather = () => {
 
   return (
     // Odje vidjeti za ovu sirinu i visinu
-    <div className="w-4/5 h-[600px] bg-[url('./assets/background.jpg')] bg-cover flex items-center justify-between shadow-[0_0_200px_rgba(0,0,0)] rounded">
+    // w bilo 4/5
+    <div className="w-full md:w-4/5 md:h-[600px] bg-[url('./assets/background.jpg')] bg-cover flex flex-col sm:flex-row items-center justify-between shadow-[0_0_200px_rgba(0,0,0)] rounded">
       {/* Left side */}
-      <div className="h-full flex flex-col justify-between p-5">
+      <div className="sm:h-[600px]  w-[300px] sm:w-auto flex flex-col justify-between items-center sm:items-baseline p-5">
         {/* Logo */}
         <div className="text-2xl text-neutral-200">Weather APP</div>
         {currentWeather && <CurrentInfo />}
