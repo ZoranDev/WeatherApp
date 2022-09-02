@@ -3,11 +3,14 @@ import WeatherContext from "../context/WeatherContext";
 import { FaSearch } from "react-icons/fa";
 //Components
 import WeatherDetails from "./WeatherDetails";
+import WeatherForecast from "./WeatherForecast";
 
 const Form = () => {
   // Context
-  const { fetchTodayForecast, searchedCityWeatherInfo } =
-    useContext(WeatherContext);
+  const {
+    fetchTodayForecast,
+    searchedCityWeatherInfo: { currentWeather, forecastWeather },
+  } = useContext(WeatherContext);
 
   // State for search city
   const [searchCity, setSearchCity] = useState("");
@@ -31,7 +34,7 @@ const Form = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="h-full w-[300px] bg-[rgba(0,0,0,0.7)] p-2"
+      className="h-full w-[300px] bg-[rgba(0,0,0,0.7)] p-2 overflow-hidden"
     >
       {/* Input section */}
       <div className="w-full flex items-center justify-between mb-4">
@@ -50,7 +53,10 @@ const Form = () => {
       </div>
 
       {/* Weather details and next days */}
-      {searchedCityWeatherInfo && <WeatherDetails />}
+      <div className=" scroll-div">
+        {currentWeather && <WeatherDetails />}
+        {forecastWeather && <WeatherForecast />}
+      </div>
     </form>
   );
 };

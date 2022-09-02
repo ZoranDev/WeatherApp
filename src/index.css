@@ -7,3 +7,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scroll-div {
+  height: 520px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.scroll-div::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll-div::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: rgb(107, 60, 60);
+  border-radius: 5px;
+}

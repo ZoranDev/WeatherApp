@@ -3,19 +3,33 @@ import { createContext, useState } from "react";
 const WeatherContext = createContext();
 
 export const WeatherProvider = ({ children }) => {
-  // Satet for searched city info
-  const [searchedCityWeatherInfo, setSearchedCityWeatherInfo] = useState(null);
+  // State for searched city current weather
+  const [searchedCityWeatherInfo, setSearchedCityWeatherInfo] = useState({
+    currentWeather: null,
+    forecastWeather: null,
+  });
 
   //fetchTodayForecast function
   const fetchTodayForecast = async (searchCity) => {
     try {
-      const response = await fetch(
+      const currentResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=de7464f284cc4ed086a1d281fcc56045&units=metric`
       );
 
-      if (response.status === 200) {
-        const data = await response.json();
-        setSearchedCityWeatherInfo(data);
+      if (currentResponse.status === 200) {
+        const currentData = await currentResponse.json();
+
+        // Fetch forecast weather but only if we have info for current weather - if city is found
+        const forecastResponse = await fetch(
+          `https://api.openweathermap.org/data/2.5/onecall?lon=${currentData.coord.lon}&lat=${currentData.coord.lat}&exclude=hourly,minutely,alerts&appid=de7464f284cc4ed086a1d281fcc56045&units=metric`
+        );
+
+        const forecastData = await forecastResponse.json();
+
+        setSearchedCityWeatherInfo({
+          currentWeather: currentData,
+          forecastWeather: forecastData,
+        });
       } else {
         alert("City not found");
       }
