@@ -6,6 +6,7 @@ import Loader from "../assets/loader.jpg";
 import WeatherDetails from "./WeatherDetails";
 import WeatherForecast from "./WeatherForecast";
 import PreviousSearches from "./PreviousSearches";
+import Error from "./Error";
 
 const Form = () => {
   // Context
@@ -14,6 +15,8 @@ const Form = () => {
     searchedCityWeatherInfo: { currentWeather, forecastWeather },
     previousSearches,
     loading,
+    error,
+    setErrorMesage,
   } = useContext(WeatherContext);
 
   // State for search city
@@ -28,7 +31,7 @@ const Form = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     searchCity === ""
-      ? alert("No city for search")
+      ? setErrorMesage(true, "No city for search")
       : fetchTodayForecast(searchCity);
 
     // Delete typed city from input
@@ -38,7 +41,9 @@ const Form = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="h-full w-[300px] bg-[rgba(0,0,0,0.7)] p-2 overflow-hidden"
+      className={`${
+        currentWeather && forecastWeather ? "h-full" : "h-auto"
+      }  w-[300px]  bg-[rgba(0,0,0,0.7)] p-2 overflow-hidden expandForm`}
     >
       {/* Input section */}
       <div className="w-full flex items-center justify-between mb-4">
@@ -66,12 +71,17 @@ const Form = () => {
         </div>
       )}
 
+      {/* Error section */}
+      {error.active && <Error message={error.message} />}
+
       {/* Weather details and next days */}
-      <div className=" scroll-div">
-        <PreviousSearches />
-        {currentWeather && <WeatherDetails />}
-        {forecastWeather && <WeatherForecast />}
-      </div>
+      {currentWeather && (
+        <div className=" scroll-div">
+          <PreviousSearches />
+          {currentWeather && <WeatherDetails />}
+          {forecastWeather && <WeatherForecast />}
+        </div>
+      )}
     </form>
   );
 };

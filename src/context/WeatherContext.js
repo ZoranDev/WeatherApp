@@ -15,10 +15,20 @@ export const WeatherProvider = ({ children }) => {
   // State for loading
   const [loading, setLoading] = useState(false);
 
+  //Error state
+  const [error, setError] = useState({
+    active: false,
+    message: "",
+  });
+
   //fetchTodayForecast function
   const fetchTodayForecast = async (searchCity) => {
-    if (previousSearches.includes(searchCity.toLowerCase())) {
-      alert("Vec trazen!");
+    if (
+      previousSearches
+        .map((cityObj) => cityObj.city)
+        .includes(searchCity.toLowerCase())
+    ) {
+      setErrorMesage(true, "Alredy searched!");
     } else {
       try {
         setLoading(true);
@@ -52,10 +62,11 @@ export const WeatherProvider = ({ children }) => {
             },
           ]);
         } else {
-          alert("City not found");
+          setErrorMesage(true, "Not found.");
         }
         setLoading(false);
       } catch (error) {
+        alert(`${error}`);
         console.log(error);
       }
     }
@@ -88,14 +99,30 @@ export const WeatherProvider = ({ children }) => {
     }
   };
 
+  // Set error message
+  const setErrorMesage = (isActive, message) => {
+    setError({ active: isActive, message: message });
+    closeErrorMessage();
+  };
+
+  // Close error message
+  const closeErrorMessage = () => {
+    setTimeout(() => {
+      setError({ active: false, message: "" });
+    }, 2000);
+  };
+
   return (
     <WeatherContext.Provider
       value={{
         searchedCityWeatherInfo,
         previousSearches,
+        loading,
+        error,
         fetchTodayForecast,
         searchAgain,
         removeThisCity,
+        setErrorMesage,
       }}
     >
       {children}
