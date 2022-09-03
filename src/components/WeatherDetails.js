@@ -13,8 +13,6 @@ const WeatherDetails = () => {
     },
   } = useContext(WeatherContext);
 
-  console.log(feels_like);
-
   return (
     <div className="w-full mb-4">
       <h3 className="text-xl text-neutral-100 mb-3">Weather details</h3>
